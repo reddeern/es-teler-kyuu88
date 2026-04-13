@@ -53,4 +53,15 @@ Route::middleware('auth')->group(function () {
     // ======================
     Route::get('/laporan', [TransaksiController::class, 'laporan'])->name('laporan.index');
     Route::get('/laporan/cetak', [TransaksiController::class, 'laporan'])->name('laporan.cetak');
+
+    // ======================
+    // API VIEWERS (Cek JSON di Browser tanpa Token)
+    // ======================
+    Route::prefix('view-api')->group(function() {
+        Route::get('/produk', [App\Http\Controllers\Api\ProdukApiController::class, 'index']);
+        Route::get('/katalog', [App\Http\Controllers\Api\TransaksiApiController::class, 'produkAktif']);
+        Route::get('/riwayat', [App\Http\Controllers\Api\TransaksiApiController::class, 'index']);
+        Route::get('/laporan', [App\Http\Controllers\Api\TransaksiApiController::class, 'laporan']);
+        Route::get('/me', [App\Http\Controllers\Api\AuthApiController::class, 'profile']);
+    });
 });

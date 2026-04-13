@@ -109,6 +109,17 @@
                     Rp {{ number_format($transaksi->total_akhir) }}
                 </span>
             </div>
+
+            <div class="mt-4 pt-4 border-t border-dashed border-gray-200">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-black text-gray-400 uppercase">Uang Bayar</span>
+                    <span class="text-sm font-bold text-gray-700">Rp {{ number_format($transaksi->uang_bayar) }}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-black text-gray-400 uppercase">Kembalian</span>
+                    <span class="text-sm font-bold text-green-600">Rp {{ number_format($transaksi->uang_kembali) }}</span>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -12,8 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->statefulApi(); // Menjaga Sanctum agar tetap stabil
+        $middleware->append(\App\Http\Middleware\AlwaysJsonMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Memaksa respon JSON jika request berasal dari API
+        $exceptions->shouldRenderJsonWhen(function ($request, $e) {
+            if ($request->is('api/*')) {
+                return true;
+            }
+
+            return $request->expectsJson();
+        });
     })->create();

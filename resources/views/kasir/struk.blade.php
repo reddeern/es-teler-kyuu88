@@ -6,8 +6,26 @@
     .printer-slot { height: 12px; background: #222; border-radius: 6px 6px 0 0; position: relative; z-index: 30; }
     @keyframes printerPrint { 0% { transform: translateY(-100%); } 100% { transform: translateY(0); } }
     .animate-receipt { animation: printerPrint 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards; transform-origin: top; }
-    .receipt-body { background: white; padding: 30px; font-family: 'Courier New', Courier, monospace; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    @media print { .no-print, .printer-slot { display: none !important; } .receipt-body { box-shadow: none !important; border: none !important; padding: 0 !important; } }
+    .receipt-body { background: white; padding: 30px; font-family: 'Courier New', Courier, monospace; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 400px; margin: auto; }
+    
+    @media print { 
+        @page { margin: 0; size: 80mm auto; }
+        body { background: white !important; margin: 0; padding: 0; }
+        .no-print, .printer-slot, .printer-wrapper::before { display: none !important; } 
+        .animate-receipt { animation: none !important; transform: none !important; opacity: 1 !important; }
+        .printer-wrapper { padding: 0 !important; display: block !important; }
+        .receipt-body { 
+            box-shadow: none !important; 
+            border: none !important; 
+            padding: 5mm !important; 
+            width: 80mm !important; 
+            max-width: 80mm !important;
+            margin: 0 !important;
+            font-size: 10px;
+        }
+        .receipt-body h1 { font-size: 20px !important; }
+        .receipt-body .text-3xl { font-size: 18px !important; } /* Ukuran Total */
+    }
 </style>
 
 <div class="max-w-md mx-auto pb-20 px-4">
@@ -42,6 +60,17 @@
                     <div class="flex justify-between items-center pt-4 border-t-2 border-double border-gray-100">
                         <span class="text-lg font-black text-gray-800 tracking-tighter">TOTAL</span>
                         <span class="text-3xl font-black text-pink-600">Rp {{ number_format($transaksi->total_akhir) }}</span>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t-2 border-dashed border-gray-100 space-y-1">
+                    <div class="flex justify-between items-center italic">
+                        <span class="text-xs font-bold text-gray-400">BAYAR</span>
+                        <span class="text-xs font-bold text-gray-700">Rp {{ number_format($transaksi->uang_bayar) }}</span>
+                    </div>
+                    <div class="flex justify-between items-center italic">
+                        <span class="text-xs font-bold text-gray-400">KEMBALI</span>
+                        <span class="text-xs font-bold text-gray-700">Rp {{ number_format($transaksi->uang_kembali) }}</span>
                     </div>
                 </div>
                 <div class="mt-10 text-center italic text-[10px] font-bold text-gray-300">~ Thank You for Coming! ~</div>

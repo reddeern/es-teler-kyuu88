@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cetak Laporan - Kyuu 88</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @media print {
             .no-print { display: none !important; }

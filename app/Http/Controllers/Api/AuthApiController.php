@@ -17,6 +17,9 @@ class AuthApiController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required'
+        ], [
+            'username.required' => 'Username wajib diisi!',
+            'password.required' => 'Password wajib diisi!',
         ]);
 
         $user = User::where('username', $request->username)->first();

@@ -35,6 +35,9 @@ class TransaksiController extends Controller
         $pajak = 0; 
         $total_akhir = $subtotal; 
         
+        $uang_bayar = $request->uang_terima;
+        $uang_kembali = $uang_bayar - $total_akhir;
+
         $trx = Transaksi::create([
             'nama_pelanggan' => $request->nama_pelanggan,
             'detail_produk' => $cart,
@@ -43,7 +46,9 @@ class TransaksiController extends Controller
             'total_akhir' => $total_akhir,
             'total_harga' => $total_akhir, 
             'metode_pembayaran' => $request->metode_pembayaran,
-            'tanggal' => Carbon::now()->toDateString(), // Tambahkan kolom tanggal jika ada
+            'uang_bayar' => $uang_bayar,
+            'uang_kembali' => $uang_kembali,
+            'tanggal' => Carbon::now()->toDateString(),
         ]);
 
         $hariIni = Carbon::now()->toDateString();

@@ -22,3 +22,13 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Docker & Hosting (Local Only)
+.dockerignore
+.env.docker
+Dockerfile
+docker-compose.yml
+/docker
+Caddyfile
+API_DOCUMENTATION.md
+*.bak

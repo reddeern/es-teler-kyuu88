@@ -15,7 +15,9 @@ class Transaksi extends Model
         'pajak',
         'total_akhir',
         'total_harga',
-        'metode_pembayaran'
+        'metode_pembayaran',
+        'uang_bayar',
+        'uang_kembali'
     ];
 
     protected $casts = [
