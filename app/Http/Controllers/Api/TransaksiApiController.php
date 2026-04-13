@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Produk;
-use App\Models\Transaksi;
-use App\Models\LaporanPenjualan;
+use App\Models\Api\Produk;
+use App\Models\Api\Transaksi;
+use App\Models\Api\LaporanPenjualan;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
