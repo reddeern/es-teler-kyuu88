@@ -96,7 +96,7 @@ class TransaksiController extends Controller
 
         $query = LaporanPenjualan::query();
 
-        $start_date = $request->get('start_date', Carbon::now()->toDateString());
+        $start_date = $request->get('start_date', Carbon::now()->startOfMonth()->toDateString());
         $end_date = $request->get('end_date', Carbon::now()->toDateString());
 
         $query->whereBetween('tanggal', [$start_date, $end_date]);
@@ -110,7 +110,9 @@ class TransaksiController extends Controller
             'laporan_data', 
             'total_omset_periode', 
             'total_omset_keseluruhan', 
-            'jumlah_hari'
+            'jumlah_hari',
+            'start_date',
+            'end_date'
         ));
     }
 }

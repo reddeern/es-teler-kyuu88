@@ -46,9 +46,9 @@
         
         <div class="flex flex-wrap gap-2">
             <form action="{{ route('laporan.index') }}" method="GET" class="flex gap-2 bg-white p-2 rounded-2xl shadow-sm border-2 border-[#F2E3B6]">
-                <input type="date" name="start_date" value="{{ request('start_date', date('Y-m-d')) }}" class="p-2 text-sm rounded-xl outline-none font-bold">
+                <input type="date" name="start_date" value="{{ $start_date }}" class="p-2 text-sm rounded-xl outline-none font-bold">
                 <span class="self-center font-black text-pink-300">/</span>
-                <input type="date" name="end_date" value="{{ request('end_date', date('Y-m-d')) }}" class="p-2 text-sm rounded-xl outline-none font-bold">
+                <input type="date" name="end_date" value="{{ $end_date }}" class="p-2 text-sm rounded-xl outline-none font-bold">
                 <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-xl font-black text-xs hover:bg-black transition-all">FILTER</button>
             </form>
 
@@ -71,7 +71,7 @@
                 Rp {{ number_format($total_omset_periode) }}
             </h3>
             <p class="text-[10px] text-pink-300 font-bold mt-1 uppercase italic italic">
-                {{ \Carbon\Carbon::parse(request('start_date', date('Y-m-d')))->format('d/m/y') }} - {{ \Carbon\Carbon::parse(request('end_date', date('Y-m-d')))->format('d/m/y') }}
+                {{ \Carbon\Carbon::parse($start_date)->format('d/m/y') }} - {{ \Carbon\Carbon::parse($end_date)->format('d/m/y') }}
             </p>
         </div>
     </div>
