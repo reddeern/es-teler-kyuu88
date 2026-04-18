@@ -76,27 +76,37 @@
         </div>
     </div>
 
-    <div class="table-container shadow-xl">
-        <div class="grid grid-cols-2 gap-4 px-6 py-4 text-[11px] font-black text-gray-500 uppercase tracking-widest underline decoration-pink-200 decoration-2 underline-offset-8">
-            <div class="">TANGGAL PEMASUKAN</div>
-            <div class="text-right">TOTAL HARIAN</div>
-        </div>
-
-        <div class="space-y-2 mt-4">
-            @forelse($laporan_data as $index => $data)
-            <div class="grid grid-cols-2 gap-4 px-6 py-6 {{ ($index + 1) % 2 == 0 ? 'table-row-light' : 'table-row-dark' }} items-center font-bold text-gray-800">
-                <div class="text-base tracking-tight capitalize">
-                    {{ \Carbon\Carbon::parse($data->tanggal)->translatedFormat('l, d F Y') }}
-                </div>
-                <div class="text-right text-2xl font-black text-pink-500 italic">
-                    Rp {{ number_format($data->total_omset) }}
-                </div>
-            </div>
-            @empty
-            <div class="bg-white/50 p-10 rounded-2xl text-center text-gray-400 italic font-bold">
-                Tidak ada data pada tanggal ini.
-            </div>
-            @endforelse
+    <div class="bg-white rounded-[30px] shadow-sm border-2 border-[#F2E3B6] border-b-4 border-pink-400 overflow-hidden mb-8">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-[#F2E3B6] text-gray-700 uppercase text-[10px] font-black tracking-widest border-b-4 border-black/10">
+                        <th class="px-4 md:px-8 py-5">Tanggal Pemasukan</th>
+                        <th class="px-4 md:px-8 py-5 text-right">Total Harian</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-800 font-bold text-sm">
+                    @forelse($laporan_data as $index => $data)
+                    <tr class="border-b border-[#F2E3B6] hover:bg-[#F8F0D8] transition-colors {{ ($index + 1) % 2 == 0 ? 'bg-white' : 'bg-gray-50/30' }}">
+                        <td class="px-4 md:px-8 py-4 whitespace-nowrap capitalize">
+                            {{ \Carbon\Carbon::parse($data->tanggal)->translatedFormat('l, d F Y') }}
+                        </td>
+                        <td class="px-4 md:px-8 py-4 text-right font-black text-pink-500 italic text-base md:text-lg">
+                            Rp {{ number_format($data->total_omset) }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="2" class="px-4 md:px-8 py-16 text-center text-gray-400 italic font-bold">
+                            <div class="flex flex-col items-center justify-center gap-3">
+                                <i class="fas fa-inbox text-4xl text-gray-200"></i>
+                                <span>Tidak ada data pada rentang tanggal ini.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
