@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\ProdukApiController;
 use App\Http\Controllers\Api\TransaksiApiController;
+use App\Http\Controllers\Api\KasirController;
 
 // ===================
 // AUTHENTICATION
@@ -39,4 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // LAPORAN & ANALITIK
     // ===================
     Route::get('/analitik/laporan-penjualan', [TransaksiApiController::class, 'laporan']);
+
+    // ===================
+    // WIDGET JAM
+    // ===================
+    Route::middleware('auth:sanctum')->get('/kasir/time', [KasirController::class, 'getCurrentTime']);
+    Route::get('/kasir/struk/{id}', [KasirController::class, 'getReceiptData']);
 });
