@@ -32,3 +32,4 @@ docker-compose.yml
 Caddyfile
 API_DOCUMENTATION.md
 *.bak
+Makefile
