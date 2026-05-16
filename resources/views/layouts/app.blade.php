@@ -134,7 +134,7 @@
     </style>
 </head>
 <body class="antialiased">
-    <div class="flex flex-col md:flex-row min-h-screen">
+    <div class="flex flex-col md:flex-row h-screen overflow-hidden">
         <aside id="main-sidebar" class="sidebar w-full md:w-[282px] p-6 flex flex-col shadow-xl" style="width: 282px; min-width: 282px;">
             <h1 class="stagger-item text-3xl font-extrabold mb-10 text-center text-gray-800 leading-tight">
                 Es Teler<br><span class="text-pink-500">Kyuu 88</span>
