@@ -32,7 +32,6 @@ class TransaksiController extends Controller
         $cart = json_decode($request->cart_data, true);
         $subtotal = collect($cart)->sum(fn($i) => $i['harga'] * $i['quantity']);
         
-        $pajak = 0; 
         $total_akhir = $subtotal; 
         
         $uang_bayar = $request->uang_terima;
@@ -42,7 +41,6 @@ class TransaksiController extends Controller
             'nama_pelanggan' => $request->nama_pelanggan,
             'detail_produk' => $cart,
             'subtotal' => $subtotal,
-            'pajak' => $pajak,
             'total_akhir' => $total_akhir,
             'total_harga' => $total_akhir, 
             'metode_pembayaran' => $request->metode_pembayaran,

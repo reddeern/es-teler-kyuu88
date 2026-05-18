@@ -28,7 +28,6 @@ class KasirController extends Controller
             'tgl_transaksi' => $order->created_at->format('d-m-Y H:i:s'), // Atau pakai $order->tanggal
             'items' => $order->detail_produk, // Ini otomatis jadi Array karena sudah di-$casts di Model
             'subtotal' => $order->subtotal,
-            'pajak' => $order->pajak,
             'total_akhir' => $order->total_akhir,
             'pembayaran' => [
                 'metode' => $order->metode_pembayaran,

@@ -12,7 +12,6 @@ class Transaksi extends Model
         'nama_pelanggan',
         'detail_produk',
         'subtotal',
-        'pajak',
         'total_akhir',
         'total_harga',
         'metode_pembayaran',

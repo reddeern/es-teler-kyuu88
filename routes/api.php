@@ -44,6 +44,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // ===================
     // WIDGET JAM
     // ===================
-    Route::middleware('auth:sanctum')->get('/kasir/time', [KasirController::class, 'getCurrentTime']);
+    //Route::middleware('auth:sanctum')->get('/kasir/time', [KasirController::class, 'getCurrentTime']);
     Route::get('/kasir/struk/{id}', [KasirController::class, 'getReceiptData']);
 });

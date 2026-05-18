@@ -13,7 +13,6 @@ return new class extends Migration {
             $table->string('nama_pelanggan');
             $table->json('detail_produk'); // Untuk menyimpan array produk
             $table->decimal('subtotal', 15, 2);
-            $table->decimal('pajak', 15, 2);
             $table->decimal('total_akhir', 15, 2);
             $table->decimal('total_harga', 15, 2);
             $table->string('metode_pembayaran');

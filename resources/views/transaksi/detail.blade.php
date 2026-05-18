@@ -99,10 +99,6 @@
                 <span>Subtotal</span>
                 <span>Rp {{ number_format($transaksi->subtotal) }}</span>
             </div>
-            <div class="flex justify-between text-sm font-bold text-gray-500">
-                <span>Pajak (0%)</span>
-                <span>Rp 0</span>
-            </div>
             <div class="flex justify-between items-center pt-4">
                 <span class="font-black text-gray-800 uppercase tracking-tighter">Total Akhir</span>
                 <span class="text-3xl font-black text-pink-500 italic">

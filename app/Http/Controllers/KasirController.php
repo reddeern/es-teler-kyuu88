@@ -25,14 +25,12 @@ class KasirController extends Controller
 
         $cart = json_decode($request->cart_data, true);
         $subtotal = collect($cart)->sum(fn($item) => $item['harga'] * $item['quantity']);
-        $pajak = $subtotal * 0.1;
-        $total_akhir = $subtotal + $pajak;
+        $total_akhir = $subtotal;
 
         $transaksi = Transaksi::create([
             'nama_pelanggan' => $request->nama_pelanggan,
             'detail_produk' => $cart, // Pastikan field ini 'json' atau 'array' di Model
             'subtotal' => $subtotal,
-            'pajak' => $pajak,
             'total_akhir' => $total_akhir,
             'total_harga' => $total_akhir,
             'metode_pembayaran' => $request->metode_pembayaran,

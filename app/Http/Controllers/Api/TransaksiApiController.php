@@ -43,15 +43,13 @@ class TransaksiApiController extends Controller
             $subtotal = collect($request->cart_data)
                 ->sum(fn($i) => $i['harga'] * $i['quantity']);
 
-            $pajak = $subtotal * 0.05;
-            $total_akhir = $subtotal + $pajak;
+            $total_akhir = $subtotal;
 
             // simpan transaksi
             $trx = Transaksi::create([
                 'nama_pelanggan' => $request->nama_pelanggan,
                 'detail_produk' => $request->cart_data,
                 'subtotal' => $subtotal,
-                'pajak' => $pajak,
                 'total_akhir' => $total_akhir,
                 'total_harga' => $total_akhir,
                 'metode_pembayaran' => $request->metode_pembayaran,
