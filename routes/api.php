@@ -34,6 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/checkout', [TransaksiApiController::class, 'store']);     // Simpan transaksi
         Route::get('/riwayat', [TransaksiApiController::class, 'index']);      // Daftar transaksi
         Route::get('/riwayat/{id}', [TransaksiApiController::class, 'show']);  // Detail transaksi
+	
+	Route::get('/time', [KasirController::class, 'getCurrentTime']);
+	Route::get('/struk/{id}', [KasirController::class, 'getReceiptData']);
     });
 
     // ===================
@@ -44,6 +47,4 @@ Route::middleware('auth:sanctum')->group(function () {
     // ===================
     // WIDGET JAM
     // ===================
-    Route::middleware('auth:sanctum')->get('/kasir/time', [KasirController::class, 'getCurrentTime']);
-    Route::get('/kasir/struk/{id}', [KasirController::class, 'getReceiptData']);
 });
