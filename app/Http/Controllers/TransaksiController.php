@@ -40,6 +40,10 @@ class TransaksiController extends Controller
         
         $total_akhir = $subtotal; 
         
+        if ($request->uang_terima < $total_akhir) {
+            return redirect()->back()->with('error', 'Uang pembayaran kurang!');
+        }
+        
         $uang_bayar = $request->uang_terima;
         $uang_kembali = $uang_bayar - $total_akhir;
 

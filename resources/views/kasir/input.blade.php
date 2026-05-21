@@ -86,9 +86,18 @@
         // Hitung ulang kembalian
         const terima = parseInt(inputTerima.value) || 0;
         const kembali = terima - totalWajib;
+        const submitBtn = document.querySelector('button[type="submit"]');
         
         displayKembali.innerText = 'Rp ' + (kembali >= 0 ? kembali.toLocaleString('id-ID') : 0);
         displayKembali.style.color = kembali >= 0 ? '#16a34a' : '#ec4899';
+        
+        if (kembali < 0) {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
     }
 
     // Event listener biar pas ganti radio button langsung gerak

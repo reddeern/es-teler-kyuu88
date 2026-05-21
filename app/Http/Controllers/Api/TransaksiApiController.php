@@ -78,6 +78,10 @@ class TransaksiApiController extends Controller
 
             $total_akhir = $subtotal;
 
+            if ($request->uang_bayar < $total_akhir) {
+                return response()->json(['success' => false, 'message' => 'Uang pembayaran kurang'], 400);
+            }
+
             // Jika uang_bayar tidak dikirim (misal QRIS), set otomatis sama dengan total_akhir
             $uang_bayar = $request->uang_bayar ?? $total_akhir;
             $uang_kembali = $request->uang_kembali ?? ($uang_bayar - $total_akhir);
