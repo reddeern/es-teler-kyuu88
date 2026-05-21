@@ -51,6 +51,7 @@
             <div>
                 <label class="block text-gray-800 font-bold mb-2">Harga (Rp)</label>
                 <input type="number" name="harga_produk" 
+                    onkeydown="return ['backspace', 'delete', 'arrowleft', 'arrowright', 'tab'].includes(event.key.toLowerCase()) || /[0-9]/.test(event.key)"
                     class="w-full p-4 rounded-2xl border-none shadow-inner focus:ring-4 focus:ring-pink-300 outline-none transition-all" 
                     placeholder="0" required>
             </div>

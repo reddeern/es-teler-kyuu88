@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            $table->decimal('uang_bayar', 15, 2)->nullable()->after('metode_pembayaran');
-            $table->decimal('uang_kembali', 15, 2)->nullable()->after('uang_bayar');
+            if (!Schema::hasColumn('transaksi', 'uang_bayar')) {
+                $table->decimal('uang_bayar', 15, 2)->nullable()->after('metode_pembayaran');
+            }
+            if (!Schema::hasColumn('transaksi', 'uang_kembali')) {
+                $table->decimal('uang_kembali', 15, 2)->nullable()->after('uang_bayar');
+            }
         });
     }
 

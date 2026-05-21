@@ -33,26 +33,69 @@ class TransaksiApiController extends Controller
         $request->validate([
             'nama_pelanggan' => 'required',
             'metode_pembayaran' => 'required',
-            'cart_data' => 'required|array'
+            'cart_data' => 'required|array',
+            'uang_bayar' => 'nullable|integer',
+            'uang_kembali' => 'nullable|integer'
         ]);
 
         DB::beginTransaction();
 
         try {
+            $normalized_cart = [];
+            $subtotal = 0;
 
-            $subtotal = collect($request->cart_data)
-                ->sum(fn($i) => $i['harga'] * $i['quantity']);
+            foreach ($request->cart_data as $item) {
+                $id_produk = $item['id'] ?? $item['id_produk'] ?? null;
+                $quantity = $item['quantity'] ?? $item['qty'] ?? 1;
+
+                $produk = Produk::find($id_produk);
+                
+                if ($produk) {
+                    $harga = $produk->harga_produk;
+                    $nama = $produk->nama_produk;
+
+                    $normalized_cart[] = [
+                        'id' => $id_produk,
+                        'nama' => $nama,
+                        'harga' => (int)$harga,
+                        'quantity' => (int)$quantity,
+                    ];
+                    $subtotal += $harga * $quantity;
+                } else {
+                    // Fallback jika produk tidak ditemukan di DB, tapi ada di request
+                    $harga = $item['harga'] ?? $item['harga_produk'] ?? 0;
+                    $nama = $item['nama'] ?? $item['nama_produk'] ?? 'Produk Tidak Diketahui';
+                    
+                    $normalized_cart[] = [
+                        'id' => $id_produk,
+                        'nama' => $nama,
+                        'harga' => (int)$harga,
+                        'quantity' => (int)$quantity,
+                    ];
+                    $subtotal += $harga * $quantity;
+                }
+            }
 
             $total_akhir = $subtotal;
+
+            if ($request->uang_bayar < $total_akhir) {
+                return response()->json(['success' => false, 'message' => 'Pembayaran kurang'], 400);
+            }
+
+            // Jika uang_bayar tidak dikirim (misal QRIS), set otomatis sama dengan total_akhir
+            $uang_bayar = $request->uang_bayar ?? $total_akhir;
+            $uang_kembali = $request->uang_kembali ?? ($uang_bayar - $total_akhir);
 
             // simpan transaksi
             $trx = Transaksi::create([
                 'nama_pelanggan' => $request->nama_pelanggan,
-                'detail_produk' => $request->cart_data,
+                'detail_produk' => $normalized_cart,
                 'subtotal' => $subtotal,
                 'total_akhir' => $total_akhir,
                 'total_harga' => $total_akhir,
                 'metode_pembayaran' => $request->metode_pembayaran,
+                'uang_bayar' => $uang_bayar,
+                'uang_kembali' => $uang_kembali,
             ]);
 
             // update laporan otomatis

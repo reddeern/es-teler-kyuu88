@@ -4,6 +4,12 @@
 <div class="max-w-4xl mx-auto">
     <h2 class="text-3xl font-black text-gray-800 mb-8 uppercase text-center tracking-widest">Detail Pembayaran</h2>
 
+    @if(isset($error))
+        <div class="bg-red-500 text-white p-4 rounded-2xl mb-6 font-black text-center shadow-lg">
+            {{ $error }}
+        </div>
+    @endif
+
     <div class="bg-[#F2E3B6] p-10 rounded-[40px] shadow-2xl border-4 border-white/50">
         <form action="{{ route('kasir.store') }}" method="POST" class="space-y-6">
             @csrf
@@ -40,7 +46,7 @@
                         <label class="block font-black text-gray-700 mb-2 uppercase">Uang Terima</label>
                         <div class="relative">
                             <span class="absolute left-4 top-4 font-black text-green-700 text-2xl">Rp</span>
-                            <input type="number" name="uang_terima" id="uang_terima" required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
+                            <input type="number" name="uang_terima" id="uang_terima" oninput="hitungKembali()" required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
                         </div>
                     </div>
 

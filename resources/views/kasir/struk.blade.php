@@ -44,10 +44,15 @@
                     @foreach($transaksi->detail_produk as $item)
                     <div class="flex justify-between items-end">
                         <div class="flex flex-col">
-                            <span class="font-black text-gray-800 text-sm uppercase">{{ $item['nama'] }}</span>
-                            <span class="text-[10px] text-gray-400">{{ $item['quantity'] }} x Rp {{ number_format($item['harga']) }}</span>
+                            @php
+                                $nama = $item['nama'] ?? $item['nama_produk'] ?? 'Produk';
+                                $qty = $item['quantity'] ?? $item['qty'] ?? 1;
+                                $harga = $item['harga'] ?? $item['harga_produk'] ?? 0;
+                            @endphp
+                            <span class="font-black text-gray-800 text-sm uppercase">{{ $nama }}</span>
+                            <span class="text-[10px] text-gray-400">{{ $qty }} x Rp {{ number_format($harga) }}</span>
                         </div>
-                        <span class="font-bold text-gray-700 text-sm">Rp {{ number_format($item['harga'] * $item['quantity']) }}</span>
+                        <span class="font-bold text-gray-700 text-sm">Rp {{ number_format($harga * $qty) }}</span>
                     </div>
                     @endforeach
                 </div>

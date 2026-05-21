@@ -29,10 +29,25 @@ class TransaksiController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'uang_terima' => 'required|integer',
+            'nama_pelanggan' => 'required',
+            'metode_pembayaran' => 'required',
+        ]);
+
         $cart = json_decode($request->cart_data, true);
         $subtotal = collect($cart)->sum(fn($i) => $i['harga'] * $i['quantity']);
         
         $total_akhir = $subtotal; 
+        
+        if ($request->uang_terima < $total_akhir) {
+            // Kirim kembali ke view input dengan error dan data yang ada
+            return view('kasir.input', [
+                'cart' => $cart,
+                'total' => $total_akhir,
+                'error' => 'Uang pembayaran kurang!'
+            ]);
+        }
         
         $uang_bayar = $request->uang_terima;
         $uang_kembali = $uang_bayar - $total_akhir;
