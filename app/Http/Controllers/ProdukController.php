@@ -21,7 +21,7 @@ class ProdukController extends Controller
 {
     $request->validate([
         'nama_produk' => 'required',
-        'harga_produk' => 'required|numeric',
+        'harga_produk' => 'required|integer',
         'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
@@ -52,7 +52,7 @@ public function update(Request $request, $id)
     // 1. Validasi input (Opsional tapi disarankan agar tidak error)
     $request->validate([
         'nama_produk' => 'required',
-        'harga_produk' => 'required|numeric',
+        'harga_produk' => 'required|integer',
         'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 

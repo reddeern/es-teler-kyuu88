@@ -34,8 +34,8 @@ class TransaksiApiController extends Controller
             'nama_pelanggan' => 'required',
             'metode_pembayaran' => 'required',
             'cart_data' => 'required|array',
-            'uang_bayar' => 'nullable|numeric',
-            'uang_kembali' => 'nullable|numeric'
+            'uang_bayar' => 'nullable|integer',
+            'uang_kembali' => 'nullable|integer'
         ]);
 
         DB::beginTransaction();

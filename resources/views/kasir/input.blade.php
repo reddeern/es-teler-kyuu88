@@ -40,7 +40,10 @@
                         <label class="block font-black text-gray-700 mb-2 uppercase">Uang Terima</label>
                         <div class="relative">
                             <span class="absolute left-4 top-4 font-black text-green-700 text-2xl">Rp</span>
-                            <input type="number" name="uang_terima" id="uang_terima" oninput="hitungKembali()" required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
+                            <input type="number" name="uang_terima" id="uang_terima" 
+                                oninput="hitungKembali()" 
+                                onkeydown="return ['backspace', 'delete', 'arrowleft', 'arrowright', 'tab'].includes(event.key.toLowerCase()) || /[0-9]/.test(event.key)"
+                                required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
                         </div>
                     </div>
 

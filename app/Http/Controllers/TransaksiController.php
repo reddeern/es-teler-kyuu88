@@ -29,6 +29,12 @@ class TransaksiController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'uang_terima' => 'required|integer',
+            'nama_pelanggan' => 'required',
+            'metode_pembayaran' => 'required',
+        ]);
+
         $cart = json_decode($request->cart_data, true);
         $subtotal = collect($cart)->sum(fn($i) => $i['harga'] * $i['quantity']);
         

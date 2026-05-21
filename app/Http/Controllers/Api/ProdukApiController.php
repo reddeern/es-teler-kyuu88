@@ -49,7 +49,7 @@ class ProdukApiController extends Controller
 {
     $request->validate([
         'nama_produk' => 'required',
-        'harga_produk' => 'required|numeric',
+        'harga_produk' => 'required|integer',
         'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
@@ -89,7 +89,7 @@ class ProdukApiController extends Controller
 
         $request->validate([
             'nama_produk' => 'required',
-            'harga_produk' => 'required|numeric',
+            'harga_produk' => 'required|integer',
             'status' => 'required'
         ]);
 
