@@ -112,6 +112,8 @@
         radio.addEventListener('change', hitungKembali);
     });
 
-    window.onload = hitungKembali;
+    window.onload = function() {
+        hitungKembali();
+    };
 </script>
 @endsection
