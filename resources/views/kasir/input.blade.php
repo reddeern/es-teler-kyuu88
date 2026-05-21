@@ -4,6 +4,12 @@
 <div class="max-w-4xl mx-auto">
     <h2 class="text-3xl font-black text-gray-800 mb-8 uppercase text-center tracking-widest">Detail Pembayaran</h2>
 
+    @if(isset($error))
+        <div class="bg-red-500 text-white p-4 rounded-2xl mb-6 font-black text-center shadow-lg">
+            {{ $error }}
+        </div>
+    @endif
+
     <div class="bg-[#F2E3B6] p-10 rounded-[40px] shadow-2xl border-4 border-white/50">
         <form action="{{ route('kasir.store') }}" method="POST" class="space-y-6">
             @csrf

@@ -41,7 +41,12 @@ class TransaksiController extends Controller
         $total_akhir = $subtotal; 
         
         if ($request->uang_terima < $total_akhir) {
-            return redirect()->back()->with('error', 'Uang pembayaran kurang!');
+            // Kirim kembali ke view input dengan error dan data yang ada
+            return view('kasir.input', [
+                'cart' => $cart,
+                'total' => $total_akhir,
+                'error' => 'Uang pembayaran kurang!'
+            ]);
         }
         
         $uang_bayar = $request->uang_terima;
