@@ -19,11 +19,11 @@
                         <label class="block font-black text-gray-700 mb-2">METODE PEMBAYARAN</label>
                         <div class="flex gap-4">
                             <label class="flex-1">
-                                <input type="radio" name="metode_pembayaran" value="QRIS" class="hidden peer" required onchange="hitungKembali()">
+                                <input type="radio" name="metode_pembayaran" value="QRIS" class="hidden peer" required>
                                 <div class="p-4 text-center bg-white rounded-2xl font-black peer-checked:bg-pink-500 peer-checked:text-white cursor-pointer shadow-md">QRIS</div>
                             </label>
                             <label class="flex-1">
-                                <input type="radio" name="metode_pembayaran" value="CASH" class="hidden peer" checked onchange="hitungKembali()">
+                                <input type="radio" name="metode_pembayaran" value="CASH" class="hidden peer" checked>
                                 <div class="p-4 text-center bg-white rounded-2xl font-black peer-checked:bg-pink-500 peer-checked:text-white cursor-pointer shadow-md">CASH</div>
                             </label>
                         </div>
@@ -40,7 +40,7 @@
                         <label class="block font-black text-gray-700 mb-2 uppercase">Uang Terima</label>
                         <div class="relative">
                             <span class="absolute left-4 top-4 font-black text-green-700 text-2xl">Rp</span>
-                            <input type="number" name="uang_terima" id="uang_terima" oninput="hitungKembali()" required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
+                            <input type="number" name="uang_terima" id="uang_terima" required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
                         </div>
                     </div>
 
@@ -58,29 +58,21 @@
 
 <script>
     function hitungKembali() {
-        // Ambil total wajib bayar
         const totalWajib = parseInt(document.getElementById('total_akhir_view').getAttribute('data-val'));
-        
         const metodeTerpilih = document.querySelector('input[name="metode_pembayaran"]:checked');
         const inputTerima = document.getElementById('uang_terima');
         const displayKembali = document.getElementById('uang_kembali');
 
         if (!metodeTerpilih) return;
 
+        // Atur readOnly berdasarkan metode pembayarn
         if (metodeTerpilih.value === 'QRIS') {
-            // Pas pilih QRIS: Isi otomatis & kunci
             inputTerima.value = totalWajib; 
             inputTerima.readOnly = true;    
         } else {
-            // Pas balik ke CASH: Buka kunci & kosongkan input
             inputTerima.readOnly = false;
-            // Cek kalau sebelumnya bekas auto-fill QRIS, kita kosongin biar bisa ngetik manual
-            if (inputTerima.value == totalWajib) {
-                inputTerima.value = '';
-            }
         }
 
-        // Hitung ulang kembalian
         const terima = parseInt(inputTerima.value) || 0;
         const kembali = terima - totalWajib;
         
@@ -88,11 +80,26 @@
         displayKembali.style.color = kembali >= 0 ? '#16a34a' : '#ec4899';
     }
 
-    // Event listener biar pas ganti radio button langsung gerak
-    document.querySelectorAll('input[name="metode_pembayaran"]').forEach(radio => {
-        radio.addEventListener('change', hitungKembali);
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputTerima = document.getElementById('uang_terima');
+        const totalWajib = parseInt(document.getElementById('total_akhir_view').getAttribute('data-val'));
+        
+        if(inputTerima) {
+            inputTerima.addEventListener('input', hitungKembali);
+        }
 
-    window.onload = hitungKembali;
+        document.querySelectorAll('input[name="metode_pembayaran"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Logika pembersihan dipindah ke sini (hanya jalan saat radio button diklik)
+                if (this.value === 'CASH' && inputTerima.value == totalWajib) {
+                    inputTerima.value = '';
+                }
+                hitungKembali(); // Jalankan kalkulasi ulang
+            });
+        });
+
+        // Jalankan kalkulasi pertama kali
+        hitungKembali();
+    });
 </script>
 @endsection
