@@ -97,23 +97,23 @@
         <div style="animation: itemSlideUp 0.5s ease-out 0.8s forwards; opacity: 0;" class="space-y-1">
             <div class="flex justify-between text-sm font-bold text-gray-500">
                 <span>Subtotal</span>
-                <span>Rp {{ number_format($transaksi->subtotal) }}</span>
+                <span>Rp {{ number_format($transaksi->subtotal ?? 0) }}</span>
             </div>
             <div class="flex justify-between items-center pt-4">
                 <span class="font-black text-gray-800 uppercase tracking-tighter">Total Akhir</span>
                 <span class="text-3xl font-black text-pink-500 italic">
-                    Rp {{ number_format($transaksi->total_akhir) }}
+                    Rp {{ number_format($transaksi->total_akhir ?? 0) }}
                 </span>
             </div>
 
             <div class="mt-4 pt-4 border-t border-dashed border-gray-200">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-black text-gray-400 uppercase">Uang Bayar</span>
-                    <span class="text-sm font-bold text-gray-700">Rp {{ number_format($transaksi->uang_bayar) }}</span>
+                    <span class="text-sm font-bold text-gray-700">Rp {{ number_format($transaksi->uang_bayar ?? 0) }}</span>
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-black text-gray-400 uppercase">Kembalian</span>
-                    <span class="text-sm font-bold text-green-600">Rp {{ number_format($transaksi->uang_kembali) }}</span>
+                    <span class="text-sm font-bold text-green-600">Rp {{ number_format($transaksi->uang_kembali ?? 0) }}</span>
                 </div>
             </div>
         </div>

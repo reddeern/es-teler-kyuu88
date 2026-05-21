@@ -33,7 +33,9 @@ class TransaksiApiController extends Controller
         $request->validate([
             'nama_pelanggan' => 'required',
             'metode_pembayaran' => 'required',
-            'cart_data' => 'required|array'
+            'cart_data' => 'required|array',
+            'uang_bayar' => 'nullable|numeric',
+            'uang_kembali' => 'nullable|numeric'
         ]);
 
         DB::beginTransaction();
@@ -41,9 +43,13 @@ class TransaksiApiController extends Controller
         try {
 
             $subtotal = collect($request->cart_data)
-                ->sum(fn($i) => $i['harga'] * $i['quantity']);
+                ->sum(fn($i) => ($i['harga'] ?? $i['harga_produk'] ?? 0) * ($i['quantity'] ?? $i['qty'] ?? 1));
 
             $total_akhir = $subtotal;
+
+            // Jika uang_bayar tidak dikirim (misal QRIS), set otomatis sama dengan total_akhir
+            $uang_bayar = $request->uang_bayar ?? $total_akhir;
+            $uang_kembali = $request->uang_kembali ?? ($uang_bayar - $total_akhir);
 
             // simpan transaksi
             $trx = Transaksi::create([
@@ -53,6 +59,8 @@ class TransaksiApiController extends Controller
                 'total_akhir' => $total_akhir,
                 'total_harga' => $total_akhir,
                 'metode_pembayaran' => $request->metode_pembayaran,
+                'uang_bayar' => $uang_bayar,
+                'uang_kembali' => $uang_kembali,
             ]);
 
             // update laporan otomatis
