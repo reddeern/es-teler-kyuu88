@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            //
+            $table->decimal('uang_bayar', 15, 2)->nullable()->after('metode_pembayaran');
+            $table->decimal('uang_kembali', 15, 2)->nullable()->after('uang_bayar');
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('transaksi', function (Blueprint $table) {
-            //
+            $table->dropColumn(['uang_bayar', 'uang_kembali']);
         });
     }
 };
