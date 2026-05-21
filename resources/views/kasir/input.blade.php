@@ -46,7 +46,8 @@
                         <label class="block font-black text-gray-700 mb-2 uppercase">Uang Terima</label>
                         <div class="relative">
                             <span class="absolute left-4 top-4 font-black text-green-700 text-2xl">Rp</span>
-                            <input type="number" name="uang_terima" id="uang_terima" oninput="hitungKembali()" required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
+                            <!-- oninput="hitungKembali()" di baris ini sudah dihapus -->
+                            <input type="number" name="uang_terima" id="uang_terima" required class="w-full p-4 pl-14 rounded-2xl border-none shadow-inner text-3xl font-black text-green-600 outline-none">
                         </div>
                     </div>
 
@@ -71,7 +72,7 @@
 
         if (!metodeTerpilih) return;
 
-        // Atur readOnly berdasarkan metode pembayarn
+        // Atur readOnly berdasarkan metode pembayaran
         if (metodeTerpilih.value === 'QRIS') {
             inputTerima.value = totalWajib; 
             inputTerima.readOnly = true;    
@@ -96,15 +97,15 @@
 
         document.querySelectorAll('input[name="metode_pembayaran"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                // Logika pembersihan dipindah ke sini (hanya jalan saat radio button diklik)
+                // Logika pembersihan hanya berjalan tepat saat radio button berpindah klik
                 if (this.value === 'CASH' && inputTerima.value == totalWajib) {
                     inputTerima.value = '';
                 }
-                hitungKembali(); // Jalankan kalkulasi ulang
+                hitungKembali(); 
             });
         });
 
-        // Jalankan kalkulasi pertama kali
+        // Jalankan kalkulasi pertama kali saat halaman dimuat
         hitungKembali();
     });
 </script>
