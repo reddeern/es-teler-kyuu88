@@ -41,9 +41,40 @@ class TransaksiApiController extends Controller
         DB::beginTransaction();
 
         try {
+            $normalized_cart = [];
+            $subtotal = 0;
 
-            $subtotal = collect($request->cart_data)
-                ->sum(fn($i) => ($i['harga'] ?? $i['harga_produk'] ?? 0) * ($i['quantity'] ?? $i['qty'] ?? 1));
+            foreach ($request->cart_data as $item) {
+                $id_produk = $item['id'] ?? $item['id_produk'] ?? null;
+                $quantity = $item['quantity'] ?? $item['qty'] ?? 1;
+
+                $produk = Produk::find($id_produk);
+                
+                if ($produk) {
+                    $harga = $produk->harga_produk;
+                    $nama = $produk->nama_produk;
+
+                    $normalized_cart[] = [
+                        'id' => $id_produk,
+                        'nama' => $nama,
+                        'harga' => (int)$harga,
+                        'quantity' => (int)$quantity,
+                    ];
+                    $subtotal += $harga * $quantity;
+                } else {
+                    // Fallback jika produk tidak ditemukan di DB, tapi ada di request
+                    $harga = $item['harga'] ?? $item['harga_produk'] ?? 0;
+                    $nama = $item['nama'] ?? $item['nama_produk'] ?? 'Produk Tidak Diketahui';
+                    
+                    $normalized_cart[] = [
+                        'id' => $id_produk,
+                        'nama' => $nama,
+                        'harga' => (int)$harga,
+                        'quantity' => (int)$quantity,
+                    ];
+                    $subtotal += $harga * $quantity;
+                }
+            }
 
             $total_akhir = $subtotal;
 
@@ -54,7 +85,7 @@ class TransaksiApiController extends Controller
             // simpan transaksi
             $trx = Transaksi::create([
                 'nama_pelanggan' => $request->nama_pelanggan,
-                'detail_produk' => $request->cart_data,
+                'detail_produk' => $normalized_cart,
                 'subtotal' => $subtotal,
                 'total_akhir' => $total_akhir,
                 'total_harga' => $total_akhir,

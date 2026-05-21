@@ -84,8 +84,8 @@
             @foreach($transaksi->detail_produk as $index => $item)
             <div class="product-item flex justify-between items-center" style="animation-delay: {{ 0.4 + ($index * 0.1) }}s">
                 <div>
-                    <span class="block font-black text-gray-800 uppercase text-sm">{{ $item['nama_produk'] ?? $item['nama'] }}</span>
-                    <span class="text-xs font-bold text-pink-400">x{{ $item['quantity'] ?? $item['qty'] }}</span>
+                    <span class="block font-black text-gray-800 uppercase text-sm">{{ $item['nama'] ?? $item['nama_produk'] ?? 'Produk (ID: '.($item['id'] ?? $item['id_produk'] ?? '?').')' }}</span>
+                    <span class="text-xs font-bold text-pink-400">x{{ $item['quantity'] ?? $item['qty'] ?? 1 }}</span>
                 </div>
                 <span class="font-black text-gray-700">Rp {{ number_format(($item['harga'] ?? 0) * ($item['quantity'] ?? $item['qty'] ?? 1), 0, ',', '.') }}</span>
             </div>
